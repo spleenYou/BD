@@ -1,0 +1,15 @@
+name: Test SSH
+
+on: [workflow_dispatch]
+
+jobs:
+  test-ssh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ajouter la clé SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Tester la connexion SSH
+        run: ssh -o StrictHostKeyChecking=no spleen@176.151.222.148 "hostname"
