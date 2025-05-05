@@ -17,8 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import authentication.views
+import mes_bds.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', authentication.views.test),
+    path('', mes_bds.views.test),
 ]
