@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Login page{% endblock title %}
+
+{% block content %}
+<div class='container container_home'>
+    <div id="subscribe">
+        <p>Inscrivez-vous maintenant</p>
+        <a href="{% url 'signup' %}">S'inscrire</a>
+    </div>
+    <div id="connection">
+        <p>Connectez-vous</p>
+        {% if errors %}
+        <div class="errors">
+            {% for error in errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type='submit'>Se connecter</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
