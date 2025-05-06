@@ -21,5 +21,5 @@ import mes_bds.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', mes_bds.views.test, name='home'),
+    path('', mes_bds.views.home, name='home'),
 ]

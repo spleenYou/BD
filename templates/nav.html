@@ -1,7 +1,9 @@
 <a id='home_link' href="{% url 'home' %}">Accueil</a>
 <div>
-    <a href="{% url 'home' %}">Que dalle</a>
-    <a href="{% url 'home' %}">Que dalle</a>
-    <a href="{% url 'home' %}">Que dalle</a>
+    {% if member_list %}
+        {% for member in member_list %}
+            <a href="">{{ member }}</a>
+        {% endfor %}
+    {% endif %}
 </div>
-<a href="{% url 'home' %}">Connexion</a>
+<a href="{% url 'home' %}">Mon compte</a>
