@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+}
+
+nav {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    width: auto;
+    background-color: rgb(45, 206, 255);
+    height: 80px;
+}
+
+nav a {
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 20px;
+    transition: background-color 1s ease;
+}
+
+nav a:hover {
+    background-color: rgb(0, 195, 255);
+    transition: background-color 1s ease;
+}
+
+nav div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+nav div a {
+    padding: 0 10px;
+}
