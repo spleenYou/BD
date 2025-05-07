@@ -7,10 +7,12 @@
     <fieldset>
         <legend>Informations personnelles</legend>
         <form action="" method="post">
+            {% csrf_token %}
             <label for="username">Nom d'utilisateur :</label>
-            <input type="" id="username" name="username" value="{{ user.username }}" />
+            <input type="text" id="username" name="username" value="{{ user.username }}" />
             <label for="mail">Adresse mail :</label>
-            <input type="" id="mail" name="mail" value="{{ user.email }}" />
+            <input type="email" id="mail" name="mail" value="{{ user.email }}" />
+            <button type='submit'>Mettre à jour</button>
         </form>
     </fieldset>
 </div>
