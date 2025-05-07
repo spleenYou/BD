@@ -29,7 +29,23 @@ def login_page(request):
 
 
 def signup_page(request):
-    return render(request, 'authentication/signup.html')
+    form = forms.SignupForm()
+    tab_error = []
+    if request.method == 'POST':
+        form = forms.SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+            )
+            login(request, user)
+            return redirect('home')
+        else:
+            errors = form.errors
+            for error in errors:
+                tab_error.append(errors[error])
+    return render(request, 'authentication/signup.html', {'form': form, 'errors': tab_error})
 
 
 def logout_page(request):

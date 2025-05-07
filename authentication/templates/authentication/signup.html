@@ -3,5 +3,19 @@
 {% block title %}Signup{% endblock title %}
 
 {% block content %}
-Signup
+<div class='container'>
+    <h2>Inscription</h2>
+    {% if errors %}
+    <div class="errors">
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit'>S'inscrire</button>
+    </form>
+</div>
 {% endblock content %}
