@@ -11,4 +11,13 @@ def home(request):
 
 @login_required
 def account(request):
-    return render(request, 'mes_bds/account.html')
+    print(request.POST)
+    member_list = [request.user.username.capitalize()]
+    return render(request, 'mes_bds/account.html', {'member_list': member_list})
+
+
+@login_required
+def manage(request, type_book):
+    print(type_book)
+    member_list = [request.user.username.capitalize()]
+    return render(request, 'mes_bds/account.html', {'member_list': member_list})

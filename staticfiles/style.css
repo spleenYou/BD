@@ -107,7 +107,7 @@ input::placeholder {
     display: block;
 }
 
-.container button, #subscribe a {
+.container button, #subscribe a, .button {
     text-decoration: none;
     color: black;
     font-size: medium;
@@ -140,7 +140,7 @@ form .errorList {
 }
 
 #personal_information {
-    display: flex;
+    display: grid;
     justify-content: center;
 }
 
@@ -158,4 +158,11 @@ form .errorList {
     grid-column: 1 / 3;
     justify-self: center;
     margin-top: 10px;
+}
+
+#manage {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
 }

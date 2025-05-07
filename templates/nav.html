@@ -2,7 +2,7 @@
 <div>
     {% if member_list %}
         {% for member in member_list %}
-            <a href="">{{ member }}</a>
+            <a href="{% url 'home' %}">{{ member }}</a>
         {% endfor %}
     {% endif %}
 </div>
