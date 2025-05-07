@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Mon compte{% endblock title %}
+
+{% block content %}
+<div id='personal_information'>
+    <fieldset>
+        <legend>Informations personnelles</legend>
+        <form action="" method="post">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="" id="username" name="username" value="{{ user.username }}" />
+            <label for="mail">Adresse mail :</label>
+            <input type="" id="mail" name="mail" value="{{ user.email }}" />
+        </form>
+    </fieldset>
+</div>
+{% endblock content %}

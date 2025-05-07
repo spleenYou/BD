@@ -80,10 +80,6 @@ input::placeholder {
     text-align: center;
 }
 
-.container div {
-    text-align: center;
-}
-
 .container_home {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -133,4 +129,24 @@ input::placeholder {
 
 form .errorList {
     display: none;
+}
+
+.container fieldset {
+    width: 20%;
+    min-width: 470px;
+}
+
+#personal_information {
+    display: flex;
+    justify-content: center;
+}
+
+#personal_information form {
+    display: grid;
+    grid-template-columns: 33% 1fr;
+    align-items: center;
+}
+
+#personal_information form label {
+    text-align: left;
 }

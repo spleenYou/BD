@@ -6,8 +6,12 @@
         {% endfor %}
     {% endif %}
 </div>
-{% if member_list %}
-<a href="{% url 'logout' %}">Mon compte</a>
+{% if user.is_authenticated %}
+    {% if request.path == '/' %}
+    <a href="{% url 'account' %}">Mon compte</a>
+    {% else %}
+    <a href="{% url 'logout' %}">Se déconnecter</a>
+    {% endif %}
 {% else %}
 <a href="{% url 'login' %}">Se connecter</a>
 {% endif %}
