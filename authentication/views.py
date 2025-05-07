@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 
 from . import forms
 
@@ -30,3 +30,8 @@ def login_page(request):
 
 def signup_page(request):
     return render(request, 'authentication/signup.html')
+
+
+def logout_page(request):
+    logout(request)
+    return redirect('home')
