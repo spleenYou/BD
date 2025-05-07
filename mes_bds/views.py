@@ -11,7 +11,7 @@ def home(request):
 
 @login_required
 def account(request):
-    print(request.POST)
+    print(request.user.birthday)
     member_list = [request.user.username.capitalize()]
     return render(request, 'mes_bds/account.html', {'member_list': member_list})
 
