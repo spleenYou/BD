@@ -8,6 +8,10 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+    date_creation = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Date de création'
+    )
 
     class Meta:
         verbose_name = 'Liste d\'utilisateur'

@@ -16,6 +16,10 @@ class Family(models.Model):
         related_name='family_member',
         verbose_name='Membre de la famille'
     )
+    date_creation = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Date de création'
+    )
 
     class Meta:
         constraints = [
@@ -38,16 +42,21 @@ class Author(models.Model):
     lastname = models.CharField(
         max_length=30
     )
+    date_creation = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Date de création'
+    )
 
     class Meta:
         verbose_name_plural = 'Auteurs'
 
 
-class ComicBook(models.Model):
+class Book(models.Model):
     name = models.CharField(
         max_length=128,
     )
     number = models.SmallIntegerField(
+        null=True,
         validators=[MinValueValidator(1)],
     )
     author = models.ForeignKey(
@@ -55,35 +64,36 @@ class ComicBook(models.Model):
         null=True,
         on_delete=models.SET_NULL
     )
+    BOOK_TYPES = {
+        'BD': 'Bande dessinée',
+        'MA': 'Manga',
+        'RO': 'Roman',
+        'LJ': 'Livre jeunesse',
+        'LP': 'Livre pratique',
+        'LD': 'Livre documentaire',
+        'MS': 'Manuel scolaire',
+        'RP': 'Recueil poésie',
+        'PT': 'Pièce de théâtre',
+        'ES': 'Essai',
+        'BI': 'Biographie',
+        'AU': 'Autobiographie',
+        'LA': 'Livre d\'art',
+    }
+    book_type = models.CharField(
+        max_length=2,
+        choices=BOOK_TYPES,
+        default='BD'
+    )
+    description = models.CharField(
+        null=True
+    )
+    date_creation = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Date de création'
+    )
 
     class Meta:
         verbose_name_plural = "Bandes dessinees"
-
-
-class Manga(models.Model):
-    name = models.CharField(
-        max_length=64
-    )
-    number = models.SmallIntegerField(
-        validators=[MinValueValidator(1)]
-    )
-
-    class Meta:
-        verbose_name_plural = "Mangas"
-
-
-class Book(models.Model):
-    name = models.CharField(
-        max_length=64
-    )
-    author = models.ForeignKey(
-        Author,
-        null=True,
-        on_delete=models.SET_NULL
-    )
-
-    class Meta:
-        verbose_name_plural = "Livres"
 
 
 class Library(models.Model):
@@ -93,35 +103,19 @@ class Library(models.Model):
         related_name='Owner',
         verbose_name='Proprietaire'
     )
-    comic_book_list = models.ForeignKey(
-        ComicBook,
-        on_delete=models.CASCADE,
-        related_name='comic_book',
-        verbose_name='Bande dessinee'
-    )
-    manga_list = models.ForeignKey(
-        Manga,
-        on_delete=models.CASCADE,
-        related_name='manga',
-        verbose_name='Manga'
-    )
     book_list = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
         related_name='book',
         verbose_name='Livre'
     )
+    date_creation = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Date de création'
+    )
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'comic_book_list'],
-                name='unique_user_comic'
-            ),
-            models.UniqueConstraint(
-                fields=['user', 'manga_list'],
-                name='unique_user_manga'
-            ),
             models.UniqueConstraint(
                 fields=['user', 'book_list'],
                 name='unique_user_book'
