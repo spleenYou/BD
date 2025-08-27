@@ -1,9 +1,23 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import MinLengthValidator
 
 
-class Family(models.Model):
+class TimestampedModel(models.Model):
+    time_created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Date de création',
+    )
+    time_updated = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Date de mise à jour',
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Family(TimestampedModel):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -15,10 +29,6 @@ class Family(models.Model):
         on_delete=models.CASCADE,
         related_name='family_member',
         verbose_name='Membre de la famille'
-    )
-    date_creation = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Date de création'
     )
 
     class Meta:
@@ -35,34 +45,120 @@ class Family(models.Model):
         verbose_name_plural = "Membres de la famille"
 
 
-class Author(models.Model):
-    firstname = models.CharField(
-        max_length=20
+class Author(TimestampedModel):
+    name = models.CharField(
+        max_length=255,
+        null=False,
+        verbose_name='Nom de l\'auteur',
     )
-    lastname = models.CharField(
-        max_length=30
-    )
-    date_creation = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Date de création'
-    )
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name_plural = 'Auteurs'
 
 
-class Book(models.Model):
+class Artist(TimestampedModel):
     name = models.CharField(
+        max_length=255,
+        null=False,
+        verbose_name='Nom de l\'artiste',
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Artistes'
+
+
+class Publisher(TimestampedModel):
+    name = models.CharField(
+        max_length=255,
+        null=False,
+        verbose_name='Nom de l\'éditeur',
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Editeurs'
+
+
+class Serie(TimestampedModel):
+    title = models.CharField(
+        max_length=255,
+        null=False,
+        verbose_name='Nom de la série',
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name='Description'
+    )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'Séries'
+
+
+class Book(TimestampedModel):
+    title = models.CharField(
         max_length=128,
     )
-    number = models.SmallIntegerField(
+    ISBN_10 = models.CharField(
         null=True,
-        validators=[MinValueValidator(1)],
+        blank=True,
+        max_length=10,
+        validators=[MinLengthValidator(10)],
+        verbose_name='ISBN-10'
+    )
+    ISBN_13 = models.CharField(
+        null=True,
+        blank=True,
+        max_length=13,
+        validators=[MinLengthValidator(13)],
+        verbose_name='ISBN-13'
+    )
+    number = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        verbose_name='Numéro',
     )
     author = models.ForeignKey(
         Author,
         null=True,
-        on_delete=models.SET_NULL
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='books',
+        verbose_name='Auteur',
+    )
+    artist = models.ForeignKey(
+        Artist,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='books',
+        verbose_name='Artiste',
+    )
+    serie = models.ForeignKey(
+        Serie,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='books',
+        verbose_name='Série',
+    )
+    publisher = models.ForeignKey(
+        Publisher,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='books',
+        verbose_name='Editeur'
     )
     BOOK_TYPES = {
         'BD': 'Bande dessinée',
@@ -82,21 +178,32 @@ class Book(models.Model):
     book_type = models.CharField(
         max_length=2,
         choices=BOOK_TYPES,
-        default='BD'
+        default='BD',
     )
-    description = models.CharField(
-        null=True
+    description = models.TextField(
+        null=True,
+        blank=True,
     )
-    date_creation = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Date de création'
+    cover_ID = models.CharField(
+        null=True,
+        max_length=20,
+        verbose_name='ID de couverture',
     )
+
+    def __str__(self):
+        if self.serie and self.number:
+            return f"{self.serie.title} - Tome {self.number}: {self.title}"
+        return self.title
 
     class Meta:
-        verbose_name_plural = "Bandes dessinees"
+        verbose_name_plural = "Livres"
+        indexes = [
+                models.Index(fields=['book_type']),
+                models.Index(fields=['title']),
+            ]
 
 
-class Library(models.Model):
+class Library(TimestampedModel):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -107,11 +214,7 @@ class Library(models.Model):
         Book,
         on_delete=models.CASCADE,
         related_name='book',
-        verbose_name='Livre'
-    )
-    date_creation = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Date de création'
+        verbose_name='Livre',
     )
 
     class Meta:

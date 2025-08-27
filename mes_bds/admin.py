@@ -18,8 +18,7 @@ class Family(admin.ModelAdmin):
 class Author(admin.ModelAdmin):
     list_display = (
         'id',
-        'lastname',
-        'firstname',
+        'name',
     )
     list_filter = (
     )
@@ -31,7 +30,9 @@ class Author(admin.ModelAdmin):
 class Book(admin.ModelAdmin):
     list_display = (
         'id',
-        'name',
+        'title',
+        'number',
+        'serie',
     )
     list_filter = (
     )
