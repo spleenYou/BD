@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Family, Author, ComicBook, Manga, Book, Library
+from .models import Family, Author, Book, Library
 
 
 @admin.register(Family)
@@ -20,32 +20,6 @@ class Author(admin.ModelAdmin):
         'id',
         'lastname',
         'firstname',
-    )
-    list_filter = (
-    )
-    list_display_links = (
-    )
-
-
-@admin.register(ComicBook)
-class ComicBook(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'number',
-        'name',
-    )
-    list_filter = (
-    )
-    list_display_links = (
-    )
-
-
-@admin.register(Manga)
-class Manga(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'number',
-        'name',
     )
     list_filter = (
     )
