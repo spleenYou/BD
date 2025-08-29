@@ -88,19 +88,19 @@ class Publisher(TimestampedModel):
 
 
 class Serie(TimestampedModel):
-    title = models.CharField(
+    name = models.CharField(
         max_length=255,
         null=False,
         verbose_name='Nom de la série',
     )
     description = models.TextField(
-        blank=True,
         null=True,
+        blank=True,
         verbose_name='Description'
     )
 
     def __str__(self):
-        return self.title
+        return self.name
 
     class Meta:
         verbose_name_plural = 'Séries'
@@ -140,6 +140,7 @@ class Book(TimestampedModel):
     artist = models.ForeignKey(
         Artist,
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         related_name='books',
         verbose_name='Artiste',
@@ -186,13 +187,14 @@ class Book(TimestampedModel):
     )
     cover_ID = models.CharField(
         null=True,
+        blank=True,
         max_length=20,
         verbose_name='ID de couverture',
     )
 
     def __str__(self):
         if self.serie and self.number:
-            return f"{self.serie.title} - Tome {self.number}: {self.title}"
+            return f"{self.serie.name} - Tome {self.number} {self.title}"
         return self.title
 
     class Meta:

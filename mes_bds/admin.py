@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Family, Author, Book, Library
+from .models import Family, Author, Artist, Publisher, Serie, Book, Library
 
 
 @admin.register(Family)
@@ -26,15 +26,53 @@ class Author(admin.ModelAdmin):
     )
 
 
+@admin.register(Artist)
+class Artist(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'name',
+    )
+    list_filter = (
+    )
+    list_display_links = (
+    )
+
+
+@admin.register(Publisher)
+class Publisher(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'name',
+    )
+    list_filter = (
+    )
+    list_display_links = (
+    )
+
+
+@admin.register(Serie)
+class Serie(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'name',
+    )
+    list_filter = (
+    )
+    list_display_links = (
+    )
+
+
 @admin.register(Book)
 class Book(admin.ModelAdmin):
     list_display = (
         'id',
-        'title',
-        'number',
         'serie',
+        'number',
+        'title',
+        'book_type',
     )
     list_filter = (
+        'serie',
     )
     list_display_links = (
     )
