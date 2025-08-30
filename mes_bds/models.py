@@ -109,20 +109,14 @@ class Serie(TimestampedModel):
 class Book(TimestampedModel):
     title = models.CharField(
         max_length=128,
+        verbose_name='Titre',
     )
-    ISBN_10 = models.CharField(
-        null=True,
-        blank=True,
-        max_length=10,
-        validators=[MinLengthValidator(10)],
-        verbose_name='ISBN-10'
-    )
-    ISBN_13 = models.CharField(
+    ISBN = models.CharField(
         null=True,
         blank=True,
         max_length=13,
-        validators=[MinLengthValidator(13)],
-        verbose_name='ISBN-13'
+        validators=[MinLengthValidator(10)],
+        verbose_name='ISBN'
     )
     number = models.PositiveSmallIntegerField(
         null=True,

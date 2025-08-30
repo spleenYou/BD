@@ -27,4 +27,5 @@ urlpatterns = [
     path('signup/', authentication.views.signup_page, name='signup'),
     path('account/', mes_bds.views.account, name='account'),
     path('my_library/', mes_bds.views.my_library, name='my_library'),
+    path('add_book/', mes_bds.views.add_book, name='add_book'),
 ]

@@ -3,6 +3,7 @@
 {% block title %}Ma librairie{% endblock title %}
 
 {% block content %}
+    <a href="{% url 'add_book' %}">Ajouter un livre</a>
     {% for serie in library %}
         <p>
         {{ serie.name }}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un livre{% endblock title %}
+
+{% block content %}
+    {% for serie in series %}
+        <h3>{{ serie.name }} - Livres manquants</h3>
+        {% for book in serie.missing_books %}
+            <p>{{ book }}</p>
+        {% endfor %}
+    {% endfor %}
+{% endblock content %}

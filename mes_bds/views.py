@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Prefetch
 from .models import Serie, Book
+from . import forms
 
 
 def home(request):
@@ -14,6 +15,27 @@ def home(request):
 @login_required
 def account(request):
     return render(request, 'mes_bds/account.html')
+
+
+@login_required
+def add_new_book(request):
+    form = forms.AddBookForm()
+    return render(request, 'mes_bds/add_new_book.html', {'form': form})
+
+
+@login_required
+def add_book(request):
+    user = request.user
+    series = Serie.objects.prefetch_related(
+        Prefetch(
+            'books',
+            queryset=Book.objects.exclude(book__user=user).order_by('number'),
+            to_attr='missing_books'
+        )
+    ).filter(
+        books__isnull=False
+    ).distinct()
+    return render(request, 'mes_bds/add_book.html', {'series': series})
 
 
 @login_required
