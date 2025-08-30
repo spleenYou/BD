@@ -6,7 +6,6 @@
 <div id='personal_information'>
     <fieldset>
         <legend>Informations personnelles</legend>
-        {{ user.birthday }}
         <form action="" method="post">
             {% csrf_token %}
             <label for="username">Nom d'utilisateur :</label>
@@ -20,8 +19,5 @@
             <button type='submit'>Mettre à jour</button>
         </form>
     </fieldset>
-</div>
-<div id='manage'>
-    <a class="button" href="{% url 'manage' 'book' %}">Gérer mes livres</a>
 </div>
 {% endblock content %}

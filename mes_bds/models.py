@@ -194,7 +194,7 @@ class Book(TimestampedModel):
 
     def __str__(self):
         if self.serie and self.number:
-            return f"{self.serie.name} - Tome {self.number} {self.title}"
+            return f"Tome {self.number} {self.title}"
         return self.title
 
     class Meta:
@@ -212,7 +212,7 @@ class Library(TimestampedModel):
         related_name='Owner',
         verbose_name='Proprietaire'
     )
-    book_list = models.ForeignKey(
+    book = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
         related_name='book',
@@ -222,7 +222,7 @@ class Library(TimestampedModel):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['user', 'book_list'],
+                fields=['user', 'book'],
                 name='unique_user_book'
             )
         ]

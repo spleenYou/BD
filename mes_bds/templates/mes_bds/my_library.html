@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Ma librairie{% endblock title %}
+
+{% block content %}
+    {% for serie in library %}
+        <p>
+        {{ serie.name }}
+        {% for book in serie.books.all %}
+            {{ book.number }} {{ book.title }}
+        {% endfor %}
+        </p>
+    {% endfor %}
+{% endblock content %}
