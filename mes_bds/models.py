@@ -192,6 +192,12 @@ class Book(TimestampedModel):
         return self.title
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['serie', 'number'],
+                name='unique_serie_number'
+            )
+        ]
         verbose_name_plural = "Livres"
         indexes = [
                 models.Index(fields=['book_type']),

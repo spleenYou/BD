@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Prefetch
-from .models import Serie, Book
+from django.db.models import Prefetch, Count, Q, Exists, OuterRef
+from .models import Serie, Book, Library
 from . import forms
 
 
@@ -26,16 +26,33 @@ def add_new_book(request):
 @login_required
 def add_book(request):
     user = request.user
-    series = Serie.objects.prefetch_related(
-        Prefetch(
-            'books',
-            queryset=Book.objects.exclude(book__user=user).order_by('number'),
-            to_attr='missing_books'
-        )
-    ).filter(
-        books__isnull=False
-    ).distinct()
-    return render(request, 'mes_bds/add_book.html', {'series': series})
+    if request.method == 'POST':
+        if 'serie' in request.POST:
+            selected_serie_id = request.POST['serie']
+            books = Book.objects.filter(serie=selected_serie_id).annotate(
+                is_owned=Exists(
+                    Library.objects.filter(
+                        book=OuterRef('pk'),
+                        user=user
+                    )
+                )
+            )
+            serie = Serie.objects.get(id=selected_serie_id)
+            return render(request, 'mes_bds/select_book.html', {'books': books, 'serie': serie})
+        if 'book' in request.POST:
+            selected_book_id = request.POST['book']
+            selected_book = Book.objects.get(pk=selected_book_id)
+            new_library = Library.objects.create(
+                user=user,
+                book=selected_book
+            )
+            new_library.save()
+            return redirect('my_library')
+    series = Serie.objects.all().annotate(
+        total_books=Count('books', distinct=True),
+        owned_books=Count('books', filter=Q(books__book__user=user))
+    )
+    return render(request, 'mes_bds/select_serie.html', {'series': series})
 
 
 @login_required

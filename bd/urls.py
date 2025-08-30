@@ -28,4 +28,5 @@ urlpatterns = [
     path('account/', mes_bds.views.account, name='account'),
     path('my_library/', mes_bds.views.my_library, name='my_library'),
     path('add_book/', mes_bds.views.add_book, name='add_book'),
+    path('add_new_book/', mes_bds.views.add_new_book, name='add_new_book'),
 ]
