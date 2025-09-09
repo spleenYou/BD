@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ajouter un livre{% endblock title %}
+
+{% block content %}
+    <form method='post' enctype=multipart/form-data>
+        <input id="isbn" name="isbn" type='text' placeholder="Indiquer l'ISBN">
+        {% csrf_token %}
+        <button>Ok</button>
+    </form
+    <span>------------------------</span>
+    <h2>Séries</h2>
+    <div>
+        <img src={% static 'img/default-M.jpg' %} alt="default cover">
+        <br />
+        <span>Titre</span>
+    </div>
+{% endblock content %}

@@ -17,16 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import authentication.views
-import library.views
+import library.views as library
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', library.views.home, name='home'),
+    path('', library.home, name='home'),
     path('login/', authentication.views.login_page, name='login'),
     path('logout/', authentication.views.logout_page, name='logout'),
     path('signup/', authentication.views.signup_page, name='signup'),
-    path('account/', library.views.account, name='account'),
-    path('my_library/', library.views.my_library, name='my_library'),
-    path('add_book/', library.views.add_book, name='add_book'),
-    path('add_new_book/', library.views.add_new_book, name='add_new_book'),
+    path('account/', library.account, name='account'),
+    path('my_library/', library.my_library, name='my_library'),
+    path('book/add/', library.add_book, name='add_book'),
+    path('book/add/ISBN/<int:ISBN>', library.add_book_isbn, name='add_book_isbn'),
+    path('book/add/serie/<int:serie_id>', library.add_book_serie, name='add_book_serie'),
 ]

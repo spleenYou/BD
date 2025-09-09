@@ -18,41 +18,47 @@ def account(request):
 
 
 @login_required
-def add_new_book(request):
+def add_book_isbn(request):
     form = forms.AddBookForm()
-    return render(request, 'library/add_new_book.html', {'form': form})
+    return render(request, 'library/add_book_isbn.html', {'form': form})
+
+
+@login_required
+def add_book_serie(request):
+    return render(request, 'library/add_book.html')
 
 
 @login_required
 def add_book(request):
     user = request.user
     if request.method == 'POST':
-        if 'serie' in request.POST:
-            selected_serie_id = request.POST['serie']
-            books = Book.objects.filter(serie=selected_serie_id).annotate(
-                is_owned=Exists(
-                    Library.objects.filter(
-                        book=OuterRef('pk'),
-                        user=user
-                    )
-                )
-            )
-            serie = Serie.objects.get(id=selected_serie_id)
-            return render(request, 'library/select_book.html', {'books': books, 'serie': serie})
-        if 'book' in request.POST:
-            selected_book_id = request.POST['book']
-            selected_book = Book.objects.get(pk=selected_book_id)
-            new_library = Library.objects.create(
-                user=user,
-                book=selected_book
-            )
-            new_library.save()
-            return redirect('my_library')
+        print(request.POST)
+        # if 'serie' in request.POST:
+        #     selected_serie_id = request.POST['serie']
+        #     books = Book.objects.filter(serie=selected_serie_id).annotate(
+        #         is_owned=Exists(
+        #             Library.objects.filter(
+        #                 book=OuterRef('pk'),
+        #                 user=user
+        #             )
+        #         )
+        #     )
+        #     serie = Serie.objects.get(id=selected_serie_id)
+        #     return render(request, 'library/select_book.html', {'books': books, 'serie': serie})
+        # if 'book' in request.POST:
+        #     selected_book_id = request.POST['book']
+        #     selected_book = Book.objects.get(pk=selected_book_id)
+        #     new_library = Library.objects.create(
+        #         user=user,
+        #         book=selected_book
+        #     )
+        #     new_library.save()
+        #     return redirect('my_library')
     series = Serie.objects.all().annotate(
         total_books=Count('books', distinct=True),
         owned_books=Count('books', filter=Q(books__book__user=user))
     )
-    return render(request, 'library/select_serie.html', {'series': series})
+    return render(request, 'library/add_book.html', {'series': series})
 
 
 @login_required
