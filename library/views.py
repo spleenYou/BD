@@ -9,18 +9,18 @@ def home(request):
     member_list = None
     if request.user.is_authenticated:
         member_list = [request.user.username.capitalize()]
-    return render(request, 'mes_bds/index.html', {'member_list': member_list})
+    return render(request, 'library/index.html', {'member_list': member_list})
 
 
 @login_required
 def account(request):
-    return render(request, 'mes_bds/account.html')
+    return render(request, 'library/account.html')
 
 
 @login_required
 def add_new_book(request):
     form = forms.AddBookForm()
-    return render(request, 'mes_bds/add_new_book.html', {'form': form})
+    return render(request, 'library/add_new_book.html', {'form': form})
 
 
 @login_required
@@ -38,7 +38,7 @@ def add_book(request):
                 )
             )
             serie = Serie.objects.get(id=selected_serie_id)
-            return render(request, 'mes_bds/select_book.html', {'books': books, 'serie': serie})
+            return render(request, 'library/select_book.html', {'books': books, 'serie': serie})
         if 'book' in request.POST:
             selected_book_id = request.POST['book']
             selected_book = Book.objects.get(pk=selected_book_id)
@@ -52,7 +52,7 @@ def add_book(request):
         total_books=Count('books', distinct=True),
         owned_books=Count('books', filter=Q(books__book__user=user))
     )
-    return render(request, 'mes_bds/select_serie.html', {'series': series})
+    return render(request, 'library/select_serie.html', {'series': series})
 
 
 @login_required
@@ -63,4 +63,4 @@ def my_library(request):
     ).prefetch_related(
         Prefetch('books', queryset=Book.objects.filter(book__user=user).order_by('number'))
     ).distinct()
-    return render(request, 'mes_bds/my_library.html', {'library': library})
+    return render(request, 'library/my_library.html', {'library': library})
