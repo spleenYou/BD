@@ -28,6 +28,14 @@ urlpatterns = [
     path('account/', library.account, name='account'),
     path('my_library/', library.my_library, name='my_library'),
     path('my_library/book/add/', library.add_book, name='my_library_add_book'),
-    path('my_library/book/add/ISBN/<int:ISBN>', library.add_book_isbn, name='my_library_add_book_isbn'),
-    path('my_library/book/add/serie/<int:serie_id>', library.add_book_serie, name='my_library_add_book_serie'),
+    path(
+        'my_library/book/add/<int:book_id>',
+        library.add_book_isbn,
+        name='my_library_add_book_isbn'
+    ),
+    path(
+        'my_library/book/add/serie/<int:serie_id>',
+        library.add_book_serie,
+        name='my_library_add_book_serie'
+    ),
 ]

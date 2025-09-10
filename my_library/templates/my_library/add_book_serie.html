@@ -9,7 +9,7 @@
     <div>
         <form method='post' enctype=multipart/form-data>
             {% csrf_token %}
-                {% include 'library/book_template.html' with book=book %}
+                {% include 'my_library/book_template.html' with book=book %}
             {%if not book.is_owned %}
             <button name="book_id" value={{ book.id }}>Ajouter</button>
             {% else %}

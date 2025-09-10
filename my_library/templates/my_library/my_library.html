@@ -13,7 +13,7 @@
                 {% endif %}
             </div>
         {% for book in serie.books.all %}
-            {% include 'library/book_template.html' with book=book %}
+            {% include 'my_library/book_template.html' with book=book %}
         {% endfor %}
         </p>
     {% endfor %}

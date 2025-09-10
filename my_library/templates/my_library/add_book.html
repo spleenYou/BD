@@ -4,10 +4,13 @@
 
 {% block content %}
     <form method='post' enctype=multipart/form-data>
-        <input id="isbn" name="isbn" type='text' placeholder="Indiquer l'ISBN">
+        <input id="ISBN" name="ISBN" type='text' placeholder="Indiquer l'ISBN">
         {% csrf_token %}
         <button>Ok</button>
     </form>
+    {% for message in messages %}
+        <span>{{ message }}</span>
+    {% endfor %}
     <hr class="separator-line" />
     <h2>Séries</h2>
     {% if series.count > 0 %}
