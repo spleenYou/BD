@@ -3,13 +3,13 @@
 {% block title %}Ma librairie{% endblock title %}
 
 {% block content %}
-    <a href="{% url 'add_book' %}">Ajouter un livre</a>
+    <a href="{% url 'my_library_add_book' %}">Ajouter un livre</a>
     {% for serie in library %}
         <p>
             <div>
                 {{ serie.name }} ({{ serie.owned_books }}/{{ serie.total_books }})
                 {% if not serie.is_complete %}
-                    <a href="{% url 'add_book_serie' serie.id %}">Ajouter un livre</a>
+                    <a href="{% url 'my_library_add_book_serie' serie.id %}">Ajouter un livre</a>
                 {% endif %}
             </div>
         {% for book in serie.books.all %}

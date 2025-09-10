@@ -13,7 +13,7 @@
     {% if series.count > 0 %}
         {% for serie in series %}
         <div>
-            <a href="{% url 'add_book_serie' serie.id %}" >
+            <a href="{% url 'my_library_add_book_serie' serie.id %}" >
                 <span>{{ serie.name }} ({{serie.total_books}})</span>
             </a>
         </div>
