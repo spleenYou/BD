@@ -116,7 +116,7 @@ class Book(TimestampedModel):
         blank=True,
         max_length=13,
         validators=[MinLengthValidator(10)],
-        verbose_name='ISBN'
+        verbose_name='ISBN',
     )
     number = models.PositiveSmallIntegerField(
         null=True,

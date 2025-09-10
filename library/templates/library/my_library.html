@@ -6,9 +6,14 @@
     <a href="{% url 'add_book' %}">Ajouter un livre</a>
     {% for serie in library %}
         <p>
-        {{ serie.name }}
+            <div>
+                {{ serie.name }} ({{ serie.owned_books }}/{{ serie.total_books }})
+                {% if not serie.is_complete %}
+                    <a href="{% url 'add_book_serie' serie.id %}">Ajouter un livre</a>
+                {% endif %}
+            </div>
         {% for book in serie.books.all %}
-            {{ book.number }} {{ book.title }}
+            {% include 'library/book_template.html' with book=book %}
         {% endfor %}
         </p>
     {% endfor %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Prefetch, Count, Q, Exists, OuterRef
+from django.db.models import Prefetch, Count, Q, Exists, OuterRef, ExpressionWrapper, BooleanField, F, Case, When, Value
 from .models import Serie, Book, Library
 from . import forms
 
@@ -24,47 +24,59 @@ def add_book_isbn(request):
 
 
 @login_required
-def add_book_serie(request):
-    return render(request, 'library/add_book.html')
+def add_book_serie(request, serie_id):
+    if request.method == 'POST':
+        book_id = request.POST['book_id']
+        book = Book.objects.get(pk=book_id)
+        library = Library.objects.create(
+            user=request.user,
+            book=book
+        )
+        library.save()
+        return redirect('my_library')
+    books = Book.objects.filter(serie_id=serie_id).annotate(
+        is_owned=Exists(
+            Library.objects.filter(
+                book=OuterRef('pk'),
+                user=request.user
+            )
+        )
+    )
+    return render(request, 'library/add_book_serie.html', {'books': books})
 
 
 @login_required
 def add_book(request):
     user = request.user
-    if request.method == 'POST':
-        print(request.POST)
-        # if 'serie' in request.POST:
-        #     selected_serie_id = request.POST['serie']
-        #     books = Book.objects.filter(serie=selected_serie_id).annotate(
-        #         is_owned=Exists(
-        #             Library.objects.filter(
-        #                 book=OuterRef('pk'),
-        #                 user=user
-        #             )
-        #         )
-        #     )
-        #     serie = Serie.objects.get(id=selected_serie_id)
-        #     return render(request, 'library/select_book.html', {'books': books, 'serie': serie})
-        # if 'book' in request.POST:
-        #     selected_book_id = request.POST['book']
-        #     selected_book = Book.objects.get(pk=selected_book_id)
-        #     new_library = Library.objects.create(
-        #         user=user,
-        #         book=selected_book
-        #     )
-        #     new_library.save()
-        #     return redirect('my_library')
-    series = Serie.objects.all().annotate(
+    series = Serie.objects.filter(books__isnull=False).annotate(
         total_books=Count('books', distinct=True),
         owned_books=Count('books', filter=Q(books__book__user=user))
+    ).annotate(
+        is_complete=Case(
+            When(total_books=F('owned_books'), then=Value(True)),
+            default=Value(False),
+            output_field=BooleanField()
+        )
+    ).filter(
+        is_complete=False
     )
+    print(series)
     return render(request, 'library/add_book.html', {'series': series})
 
 
 @login_required
 def my_library(request):
     user = request.user
-    library = Serie.objects.filter(
+    library = Serie.objects.all().annotate(
+        total_books=Count('books', distinct=True),
+        owned_books=Count('books', filter=Q(books__book__user=user), distinct=True),
+    ).annotate(
+        is_complete=Case(
+            When(total_books=F('owned_books'), then=Value(True)),
+            default=Value(False),
+            output_field=BooleanField()
+        )
+    ).filter(
         books__book__user=user
     ).prefetch_related(
         Prefetch('books', queryset=Book.objects.filter(book__user=user).order_by('number'))

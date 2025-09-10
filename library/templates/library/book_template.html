@@ -1,0 +1,6 @@
+{% load static %}
+
+<div>
+    <img src="{% static 'img/default-M.jpg'%}" alt='Cover {{ book.title }} {{ book.number }}'>
+    <span>{{ book.number }} - {{ book.title }}</span>
+</div>
