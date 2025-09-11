@@ -23,7 +23,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
             cd ${{ secrets.SERVER_DIRECTORY }} &&
             git pull origin main &&
-            ~/.local/bin/poetry install --no-dev &&
+            ~/.local/bin/poetry install &&
             source .venv/bin/activate &&
             python manage.py migrate &&
             python manage.py collectstatic --noinput &&
