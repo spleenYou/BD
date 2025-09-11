@@ -13,7 +13,8 @@ from django.db.models import (
     When,
     Value
 )
-from .models import Serie, Book, Library
+from .models import Serie, Book, Library, Author
+from .api import get_book_info
 
 
 def home(request):
@@ -73,18 +74,18 @@ def add_book_serie(request, serie_id):
 
 
 @login_required
-def add_book(request, error=None):
+def add_book(request):
     if request.method == 'POST':
-        ISBN = request.POST['ISBN']
-        ISBN = ISBN.replace('-', '').replace(' ', '')
-        if not (ISBN.isdigit() and (len(ISBN) == 10 or len(ISBN) == 13)):
-            messages.error(request, 'ISBN invalide')
-            return redirect('my_library_add_book')
+        isbn = request.POST['isbn']
+        isbn = isbn.replace('-', '').replace(' ', '')
+        if is_isbn(isbn):
+            if not isbn_in_db(isbn):
+                book_id = fill_db_book(isbn)
+                return redirect(to='my_library_add_book_isbn', book_id=book_id)
+            else:
+                messages.error(request, message='Livre déjà ajouté')
         else:
-            ISBN_checked, book_info = check_ISBN(ISBN)
-            if ISBN_checked:
-                book_id = fill_db_book(book_info)
-                return redirect('my_library_add_book_isbn', book_id=book_id)
+            messages.error(request, message='isbn invalide')
     user = request.user
     series = Serie.objects.filter(books__isnull=False).annotate(
         total_books=Count('books', distinct=True),
@@ -98,16 +99,42 @@ def add_book(request, error=None):
     ).filter(
         is_complete=False
     )
-    return render(request, 'my_library/add_book.html', {'series': series})
+    return render(request, template_name='my_library/add_book.html', context={'series': series})
 
 
-def check_ISBN(ISBN):
-    return True, {'test': 'test'}
+def isbn_in_db(isbn):
+    result = Book.objects.filter(ISBN=isbn).first()
+    if result is not None:
+        return True
+    return False
 
 
-def fill_db_book(book_info):
-    print(book_info)
-    return 1
+def is_isbn(isbn):
+    return isbn.isdigit() and (len(isbn) == 10 or len(isbn) == 13)
+
+
+def fill_db_book(isbn):
+    book_info = get_book_info(isbn)
+    new_book = Book(
+        title=book_info['title'],
+        ISBN=book_info['isbn'],
+        cover_ID=book_info['cover_edition_key'],
+        serie=Serie.objects.get(name='Unsorted'),
+    )
+    new_book.save()
+    new_book.authors.set(find_author(book_info['author_name']))
+    return new_book.id
+
+
+def find_author(author_names):
+    author_tab = []
+    for author_name in author_names:
+        author = Author.objects.filter(name=author_name).first()
+        if author is None:
+            new_author = Author.objects.create(name=author_name)
+            author = new_author.save()
+        author_tab.append(author)
+    return author_tab
 
 
 @login_required

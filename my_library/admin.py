@@ -64,11 +64,12 @@ class Serie(admin.ModelAdmin):
 
 @admin.register(Book)
 class Book(admin.ModelAdmin):
+    filter_horizontal = ('authors',)
     list_display = (
         'id',
-        'serie',
         'number',
         'title',
+        'serie',
         'book_type',
     )
     list_filter = (

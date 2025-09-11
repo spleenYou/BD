@@ -112,6 +112,7 @@ class Book(TimestampedModel):
         verbose_name='Titre',
     )
     ISBN = models.CharField(
+        unique=True,
         null=True,
         blank=True,
         max_length=13,
@@ -123,13 +124,11 @@ class Book(TimestampedModel):
         blank=True,
         verbose_name='Numéro',
     )
-    author = models.ForeignKey(
+    authors = models.ManyToManyField(
         Author,
-        null=True,
         blank=True,
-        on_delete=models.SET_NULL,
         related_name='books',
-        verbose_name='Auteur',
+        verbose_name='Auteurs',
     )
     artist = models.ForeignKey(
         Artist,
@@ -192,17 +191,11 @@ class Book(TimestampedModel):
         return self.title
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['serie', 'number'],
-                name='unique_serie_number'
-            )
-        ]
         verbose_name_plural = "Livres"
         indexes = [
-                models.Index(fields=['book_type']),
-                models.Index(fields=['title']),
-            ]
+            models.Index(fields=['book_type']),
+            models.Index(fields=['title']),
+        ]
 
 
 class Library(TimestampedModel):
