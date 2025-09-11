@@ -1,7 +1,12 @@
 {% load static %}
 
 <div>
-    <img src="{% static 'img/default-M.jpg'%}" alt='Cover {{ book.title }} {{ book.number }}'>
+    {% if book.cover_ID %}
+    <img src="https://covers.openlibrary.org/b/olid/{{ book.cover_ID }}-M.jpg"
+         alt='Cover {{ book.title }} {{ book.number }}'>
+    {% else %}
+    <img src="{% static 'img/default-M.jpg' %}" alt='Cover unavailable'>
+    {% endif %}
     <span>{{ book.number }} - {{ book.title }}</span>
     <a href="{% url 'my_library_del_book' book.id %}">Supprimer</a>
 </div>
