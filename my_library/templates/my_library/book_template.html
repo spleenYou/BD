@@ -3,4 +3,5 @@
 <div>
     <img src="{% static 'img/default-M.jpg'%}" alt='Cover {{ book.title }} {{ book.number }}'>
     <span>{{ book.number }} - {{ book.title }}</span>
+    <a href="{% url 'my_library_del_book' book.id %}">Supprimer</a>
 </div>

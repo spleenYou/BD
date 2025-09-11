@@ -38,4 +38,5 @@ urlpatterns = [
         library.add_book_serie,
         name='my_library_add_book_serie'
     ),
+    path('my_library/book/del/<int:book_id>', library.del_book, name='my_library_del_book'),
 ]

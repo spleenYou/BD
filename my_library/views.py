@@ -128,3 +128,14 @@ def my_library(request):
         Prefetch('books', queryset=Book.objects.filter(book__user=user).order_by('number'))
     ).distinct()
     return render(request, 'my_library/my_library.html', {'library': library})
+
+
+@login_required
+def del_book(request, book_id):
+    book = Book.objects.get(pk=book_id)
+    if request.method == 'POST':
+        if request.POST['validation'] == 'true':
+            book_to_remove = Library.objects.filter(book=book, user=request.user)
+            book_to_remove.delete()
+        return redirect('my_library')
+    return render(request, 'my_library/del_book.html', {'book': book})
