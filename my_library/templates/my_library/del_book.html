@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un nouveau livre{% endblock title %}
+
+{% block content %}
+    {% for message in messages %}
+        <span>{{ message }}</span>
+    {% endfor %}
+    <form method='post' enctype=multipart/form-data>
+        {% csrf_token %}
+        {% include 'my_library/book_template.html' with book=book %}
+        <button name='validation' value='false' type='submit'>Retour</button>
+        {% if not book.already_owned %}
+            <button name='validation' value='true' type='submit'>Valider</button>
+        {% endif %}
+    </form>
+{% endblock content %}
