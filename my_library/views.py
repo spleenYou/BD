@@ -15,6 +15,7 @@ from django.db.models import (
 )
 from .models import Serie, Book, Library, Author
 from .api import get_book_info
+from .img import save_book_cover
 
 
 def home(request):
@@ -118,10 +119,10 @@ def fill_db_book(isbn):
     new_book = Book(
         title=book_info['title'],
         ISBN=book_info['isbn'],
-        cover_ID=book_info['cover_edition_key'],
         serie=Serie.objects.get(name='Unsorted'),
     )
     new_book.save()
+    save_book_cover(new_book, book_info['cover_edition_key'])
     new_book.authors.set(find_author(book_info['author_name']))
     return new_book.id
 

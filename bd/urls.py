@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 import authentication.views
 import my_library.views as library
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,3 +42,6 @@ urlpatterns = [
     ),
     path('my_library/book/del/<int:book_id>', library.del_book, name='my_library_del_book'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

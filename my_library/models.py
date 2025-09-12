@@ -178,11 +178,11 @@ class Book(TimestampedModel):
         null=True,
         blank=True,
     )
-    cover_ID = models.CharField(
+    cover = models.ImageField(
         null=True,
         blank=True,
-        max_length=20,
-        verbose_name='ID de couverture',
+        upload_to='book_cover/',
+        verbose_name='Couverture',
     )
 
     def __str__(self):
