@@ -26,6 +26,6 @@ jobs:
             ~/.local/bin/poetry install &&
             source .venv/bin/activate &&
             python manage.py migrate &&
-            python manage.py collectstatic --noinput &&
+            python manage.py collectstatic --noinput --clear &&
             sudo systemctl restart gunicorn
           "
