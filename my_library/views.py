@@ -14,7 +14,7 @@ from django.db.models import (
     Value
 )
 from .models import Serie, Book, Library, Author
-from .api import get_book_info
+from .api import get_book_info, get_serie_name
 from .img import save_book_cover
 
 
@@ -116,10 +116,14 @@ def is_isbn(isbn):
 
 def fill_db_book(isbn):
     book_info = get_book_info(isbn)
+    serie_name = get_serie_name('https://www.bdbase.fr/recherche?sch=' + isbn)
+    serie = Serie.objects.filter(name=serie_name).first()
+    if not serie:
+        serie = Serie.objects.create(name=serie_name)
     new_book = Book(
         title=book_info['title'],
         ISBN=book_info['isbn'],
-        serie=Serie.objects.get(name='Unsorted'),
+        serie=serie,
     )
     new_book.save()
     save_book_cover(new_book, book_info['cover_edition_key'])
