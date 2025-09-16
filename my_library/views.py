@@ -216,3 +216,11 @@ def add_publisher_to_book(request, book_id):
         return redirect('add_book_isbn', book.id)
     publishers = Publisher.objects.all()
     return render(request, 'my_library/add_publisher_to_book.html', {'book': book, 'publishers': publishers})
+
+
+@login_required
+def del_publisher_to_book(request, book_id):
+    book = Book.objects.get(pk=book_id)
+    book.publisher = None
+    book.save()
+    return redirect('add_book_isbn', book_id)

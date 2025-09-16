@@ -42,7 +42,7 @@
             Editeur :
             {% if book.publisher %}
                 {{ book.publisher.name }}
-                Supprimer
+                <a href="{% url 'del_publisher_to_book' book.id %}">Supprimer</a>
             {% else %}
                 <a href="{% url 'add_publisher_to_book' book.id %}">Ajouter</a>
             {% endif %}
