@@ -34,10 +34,12 @@
                     <span>x</span>
                 <div>
             {% endfor %}
-            <div>Ajouter</div>
+            <div>
+                <a href="{% url 'add_author_to_book' book.id%}">Ajouter</a>
+            </div>
         </div>
         <div>
-            {{ form.publisher.label_tag }}
+            Editeur :
             {% if book.publisher %}
                 {{ book.publisher.name }}
                 modifier

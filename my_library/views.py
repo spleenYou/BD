@@ -34,7 +34,6 @@ def add_book_isbn(request, book_id):
     book = Book.objects.get(pk=book_id)
     form = AddBookForm(instance=book)
     if request.method == 'POST':
-        print(request.POST)
         form = AddBookForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
@@ -176,3 +175,39 @@ def view_serie(request, serie_id):
         Prefetch('books', queryset=Book.objects.filter(book__user=user).order_by('number'))
     ).first()
     return render(request, 'my_library/view_serie.html', {'serie': serie})
+
+
+@login_required
+def add_author_to_book(request, book_id):
+    book = Book.objects.get(pk=book_id)
+    if request.method == 'POST':
+        print(request.POST)
+        if 'add' in request.POST and request.POST['author'] != '':
+            new_author = Author.objects.create(name=request.POST['author'])
+            new_author.save()
+        else:
+            new_author = Author.objects.get(pk=request.POST['author'])
+        book.authors.add(new_author)
+        return redirect('add_book_isbn', book.id)
+    authors = Author.objects.all().exclude(
+        id__in=book.authors.all().values_list('id', flat=True)
+    )
+    return render(request, 'my_library/add_author_to_book.html', {'book': book, 'authors': authors})
+
+
+@login_required
+def del_author_to_book(request, book_id, author_id):
+    book = Book.objects.get(pk=book_id)
+    if request.method == 'POST':
+        print(request.POST)
+        if 'add' in request.POST and request.POST['author'] != '':
+            new_author = Author.objects.create(name=request.POST['author'])
+            new_author.save()
+        else:
+            new_author = Author.objects.get(pk=request.POST['author'])
+        book.authors.add(new_author)
+        return redirect('add_book_isbn', book.id)
+    authors = Author.objects.all().exclude(
+        id__in=book.authors.all().values_list('id', flat=True)
+    )
+    return render(request, 'my_library/add_author_to_book.html', {'book': book, 'authors': authors})

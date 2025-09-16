@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un auteur à un livre{% endblock title %}
+
+{% block content %}
+<h2>Auteurs disponibles</h2>
+{% include "my_library/book_template.html" with book=book %}
+<div>
+    {% for author in authors %}
+        <form method='post' enctype=multipart/form-data>
+            {% csrf_token %}
+            {{ author.name }}
+            <input type='hidden' value={{ author.id }} name='author' />
+            <button>AJouter</button>
+        </form>
+    {% endfor %}
+    <form method='post' enctype=multipart/form-data>
+        {% csrf_token %}
+        <input type='text' name='author' placeholder='Nouvel auteur' />
+        <button name='add'>AJouter</button>
+    </form>
+</div>
+{% endblock content %}
