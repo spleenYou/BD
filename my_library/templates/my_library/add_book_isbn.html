@@ -27,11 +27,11 @@
             {{ form.number.errors }}
         </div>
         <div>
-            <span>{{ form.authors.label }} :</span>
+            <span>Auteurs :</span>
             {% for author in book.authors.all %}
                 <div>
                     {{ author.name }}
-                    <span>x</span>
+                    <a href="{% url 'del_author_to_book' book.id author.id %}">x</a>
                 <div>
             {% endfor %}
             <div>

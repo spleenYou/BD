@@ -42,7 +42,8 @@ urlpatterns = [
         library.add_book_isbn,
         name='add_book_isbn'
     ),
-    path('book/<int:book_id>/author/add', library.add_author_to_book, name='add_author_to_book')
+    path('book/<int:book_id>/author/add', library.add_author_to_book, name='add_author_to_book'),
+    path('book/<int:book_id>/author/del/<int:author_id>', library.del_author_to_book, name='del_author_to_book'),
 ]
 
 if settings.DEBUG:

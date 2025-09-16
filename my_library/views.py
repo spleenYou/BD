@@ -198,16 +198,6 @@ def add_author_to_book(request, book_id):
 @login_required
 def del_author_to_book(request, book_id, author_id):
     book = Book.objects.get(pk=book_id)
-    if request.method == 'POST':
-        print(request.POST)
-        if 'add' in request.POST and request.POST['author'] != '':
-            new_author = Author.objects.create(name=request.POST['author'])
-            new_author.save()
-        else:
-            new_author = Author.objects.get(pk=request.POST['author'])
-        book.authors.add(new_author)
-        return redirect('add_book_isbn', book.id)
-    authors = Author.objects.all().exclude(
-        id__in=book.authors.all().values_list('id', flat=True)
-    )
-    return render(request, 'my_library/add_author_to_book.html', {'book': book, 'authors': authors})
+    author = Author.objects.get(pk=author_id)
+    book.authors.remove(author)
+    return redirect('add_book_isbn', book_id)
