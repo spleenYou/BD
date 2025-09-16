@@ -32,19 +32,22 @@ def account(request):
 @login_required
 def add_book_isbn(request, book_id):
     book = Book.objects.get(pk=book_id)
-    book_form = AddBookForm(instance=book)
+    form = AddBookForm(instance=book)
     if request.method == 'POST':
         print(request.POST)
-        # if request.POST['validation'] == 'true':
-        #     Library.objects.create(
-        #         user=request.user,
-        #         book_id=book_id
-        #     )
-        # return redirect('my_library')
+        form = AddBookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            if request.POST['validation'] == 'true':
+                Library.objects.create(
+                    user=request.user,
+                    book_id=book_id
+                )
+            return redirect('my_library')
     return render(
         request=request,
         template_name='my_library/add_book_isbn.html',
-        context={'form': book_form, 'book': book}
+        context={'form': form, 'book': book}
     )
 
 
