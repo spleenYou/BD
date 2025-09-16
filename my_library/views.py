@@ -5,7 +5,6 @@ from django.db.models import (
     Prefetch,
     Count,
     Q,
-    Exists,
     BooleanField,
     F,
     Case,
@@ -15,6 +14,7 @@ from django.db.models import (
 from .models import Serie, Book, Library, Author
 from .api import get_book_info, get_serie_name
 from .img import save_book_cover
+from .forms import AddBookForm
 
 
 def home(request):
@@ -31,24 +31,17 @@ def account(request):
 
 @login_required
 def add_book_isbn(request, book_id):
+    book = Book.objects.get(pk=book_id)
+    book_form = AddBookForm(instance=book)
     if request.method == 'POST':
-        if request.POST['validation'] == 'true':
-            Library.objects.create(
-                user=request.user,
-                book_id=book_id
-            )
-        return redirect('my_library')
-    book = Book.objects.filter(pk=book_id).annotate(
-        already_owned=Exists(
-            Library.objects.filter(
-                book_id=book_id,
-                user=request.user
-            )
-        )
-    ).first()
-    if book.already_owned:
-        messages.info(request, 'Livre déjà dans votre collection')
-    return render(request, 'my_library/add_book_isbn.html', {'book': book})
+        print(request.POST)
+        # if request.POST['validation'] == 'true':
+        #     Library.objects.create(
+        #         user=request.user,
+        #         book_id=book_id
+        #     )
+        # return redirect('my_library')
+    return render(request, 'my_library/add_book_isbn.html', {'form': book_form})
 
 
 @login_required
