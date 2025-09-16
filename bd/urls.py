@@ -32,16 +32,17 @@ urlpatterns = [
     path('my_library/serie/<int:serie_id>', library.view_serie, name='view_serie'),
     path('my_library/book/add/', library.add_book, name='my_library_add_book'),
     path(
-        'my_library/book/add/<int:book_id>',
-        library.add_book_isbn,
-        name='my_library_add_book_isbn'
-    ),
-    path(
         'my_library/serie/<int:serie_id>/book/add/',
         library.add_book_serie,
         name='my_library_add_book_serie'
     ),
     path('my_library/book/del/<int:book_id>', library.del_book, name='my_library_del_book'),
+    path(
+        'book/add/<int:book_id>',
+        library.add_book_isbn,
+        name='add_book_isbn'
+    ),
+    path('book/<int:book_id>/author/add', library.add_author_to_book, name='add_author_to_book')
 ]
 
 if settings.DEBUG:
