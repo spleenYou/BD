@@ -3,18 +3,10 @@
 {% block title %}Ma librairie{% endblock title %}
 
 {% block content %}
-    <a href="{% url 'my_library_add_book' %}">Ajouter un livre</a>
-    {% for serie in library %}
-        <p>
-            <div>
-                {{ serie.name }} ({{ serie.owned_books }}/{{ serie.total_books }})
-                {% if not serie.is_complete %}
-                    <a href="{% url 'my_library_add_book_serie' serie.id %}">Ajouter un livre</a>
-                {% endif %}
-            </div>
-        {% for book in serie.books.all %}
-            {% include 'my_library/book_template.html' with book=book %}
-        {% endfor %}
-        </p>
-    {% endfor %}
+{% for serie in library %}
+<div>
+    <a href="{% url 'view_serie' serie.id %}">{{ serie.name }} ({{ serie.owned_books }}/{{ serie.total_books }})</a>
+</div>
+{% endfor %}
+<a href="{% url 'my_library_add_book' %}">Ajouter un livre</a>
 {% endblock content %}

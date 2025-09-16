@@ -2,15 +2,13 @@
 
 <div>
     {% if book.cover %}
-    <img src="{{ book.cover.url }}"
-         alt='Cover {{ book.title }} {{ book.number }}'>
+        <img src="{{ book.cover.url }}" alt='Cover {{ book.title }} {{ book.number }}'>
     {% else %}
-    <img src="{% static 'img/default-M.jpg' %}" alt='Cover unavailable'>
+        <img src="{% static 'img/default-M.jpg' %}" alt='Cover unavailable'>
     {% endif %}
     {% if book.number %}
-    <span>{{ book.number }} - {{ book.title }}</span>
+        <span>{{ book.number }} - {{ book.title }}</span>
     {% else %}
-    <span>{{ book.title }}</span>
+        <span>{{ book.title }}</span>
     {% endif %}
-    <a href="{% url 'my_library_del_book' book.id %}">Supprimer</a>
 </div>

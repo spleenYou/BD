@@ -6,7 +6,6 @@ from django.db.models import (
     Count,
     Q,
     Exists,
-    OuterRef,
     BooleanField,
     F,
     Case,
@@ -62,14 +61,9 @@ def add_book_serie(request, serie_id):
             book=book
         )
         library.save()
-        return redirect('my_library')
-    books = Book.objects.filter(serie_id=serie_id).annotate(
-        is_owned=Exists(
-            Library.objects.filter(
-                book=OuterRef('pk'),
-                user=request.user
-            )
-        )
+        return redirect('view_serie', serie_id)
+    books = Book.objects.filter(serie__id=serie_id).exclude(
+        id__in=Library.objects.filter(user=request.user).values_list('book_id', flat=True)
     )
     return render(request, 'my_library/add_book_serie.html', {'books': books})
 
@@ -148,17 +142,9 @@ def my_library(request):
     library = Serie.objects.all().annotate(
         total_books=Count('books', distinct=True),
         owned_books=Count('books', filter=Q(books__book__user=user), distinct=True),
-    ).annotate(
-        is_complete=Case(
-            When(total_books=F('owned_books'), then=Value(True)),
-            default=Value(False),
-            output_field=BooleanField()
-        )
     ).filter(
         books__book__user=user
-    ).prefetch_related(
-        Prefetch('books', queryset=Book.objects.filter(book__user=user).order_by('number'))
-    ).distinct()
+    )
     return render(request, 'my_library/my_library.html', {'library': library})
 
 
@@ -166,8 +152,27 @@ def my_library(request):
 def del_book(request, book_id):
     book = Book.objects.get(pk=book_id)
     if request.method == 'POST':
+        serie_id = book.serie.id
         if request.POST['validation'] == 'true':
             book_to_remove = Library.objects.filter(book=book, user=request.user)
             book_to_remove.delete()
-        return redirect('my_library')
+        return redirect('view_serie', serie_id)
     return render(request, 'my_library/del_book.html', {'book': book})
+
+
+@login_required
+def view_serie(request, serie_id):
+    user = request.user
+    serie = Serie.objects.filter(pk=serie_id).annotate(
+        total_books=Count('books', distinct=True),
+        owned_books=Count('books', filter=Q(books__book__user=user), distinct=True),
+    ).annotate(
+        is_complete=Case(
+            When(total_books=F('owned_books'), then=Value(True)),
+            default=Value(False),
+            output_field=BooleanField()
+        )
+    ).prefetch_related(
+        Prefetch('books', queryset=Book.objects.filter(book__user=user).order_by('number'))
+    ).first()
+    return render(request, 'my_library/view_serie.html', {'serie': serie})
