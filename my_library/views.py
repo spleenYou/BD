@@ -41,7 +41,11 @@ def add_book_isbn(request, book_id):
         #         book_id=book_id
         #     )
         # return redirect('my_library')
-    return render(request, 'my_library/add_book_isbn.html', {'form': book_form})
+    return render(
+        request=request,
+        template_name='my_library/add_book_isbn.html',
+        context={'form': book_form, 'book': book}
+    )
 
 
 @login_required

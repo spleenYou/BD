@@ -8,9 +8,9 @@ class AddBookForm(forms.ModelForm):
         model = models.Book
         fields = (
             'ISBN',
+            'title',
             'book_type',
             'serie',
-            'title',
             'number',
             'authors',
             'publisher',
