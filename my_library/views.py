@@ -11,7 +11,7 @@ from django.db.models import (
     When,
     Value
 )
-from .models import Serie, Book, Library, Author
+from .models import Serie, Book, Library, Author, Publisher
 from .api import get_book_info, get_serie_name
 from .img import save_book_cover
 from .forms import AddBookForm
@@ -181,7 +181,6 @@ def view_serie(request, serie_id):
 def add_author_to_book(request, book_id):
     book = Book.objects.get(pk=book_id)
     if request.method == 'POST':
-        print(request.POST)
         if 'add' in request.POST and request.POST['author'] != '':
             new_author = Author.objects.create(name=request.POST['author'])
             new_author.save()
@@ -201,3 +200,19 @@ def del_author_to_book(request, book_id, author_id):
     author = Author.objects.get(pk=author_id)
     book.authors.remove(author)
     return redirect('add_book_isbn', book_id)
+
+
+@login_required
+def add_publisher_to_book(request, book_id):
+    book = Book.objects.get(pk=book_id)
+    if request.method == 'POST':
+        if 'add' in request.POST and request.POST['publisher'] != '':
+            new_publisher = Publisher.objects.create(name=request.POST['publisher'])
+            new_publisher.save()
+        else:
+            new_publisher = Publisher.objects.get(pk=request.POST['publisher'])
+        book.publisher = new_publisher
+        book.save()
+        return redirect('add_book_isbn', book.id)
+    publishers = Publisher.objects.all()
+    return render(request, 'my_library/add_publisher_to_book.html', {'book': book, 'publishers': publishers})

@@ -42,9 +42,9 @@
             Editeur :
             {% if book.publisher %}
                 {{ book.publisher.name }}
-                modifier
+                Supprimer
             {% else %}
-                Ajouter
+                <a href="{% url 'add_publisher_to_book' book.id %}">Ajouter</a>
             {% endif %}
             {{ form.publisher.errors }}
         </div>

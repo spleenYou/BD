@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un éditeur à un livre{% endblock title %}
+
+{% block content %}
+<h2>Editeurs disponibles</h2>
+{% include "my_library/book_template.html" with book=book %}
+<div>
+    {% for publisher in publishers %}
+        <form method='post' enctype=multipart/form-data>
+            {% csrf_token %}
+            {{ publisher.name }}
+            <input type='hidden' value={{ publisher.id }} name='publisher' />
+            <button>AJouter</button>
+        </form>
+    {% endfor %}
+    <form method='post' enctype=multipart/form-data>
+        {% csrf_token %}
+        <input type='text' name='publisher' placeholder='Nouvel éditeur' />
+        <button name='add'>AJouter</button>
+    </form>
+</div>
+{% endblock content %}
