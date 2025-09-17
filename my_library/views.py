@@ -75,7 +75,10 @@ def add_book(request):
         if is_isbn(isbn):
             if not isbn_in_db(isbn):
                 book_id = fill_db_book(isbn)
-                return redirect(to='my_library_add_book_isbn', book_id=book_id)
+                if book_id is not None:
+                    return redirect('add_book_isbn', book_id=book_id)
+                else:
+                    messages.error(request, message='Erreur du serveur')
             else:
                 messages.error(request, message='Livre déjà ajouté')
         else:
@@ -109,19 +112,21 @@ def is_isbn(isbn):
 
 def fill_db_book(isbn):
     book_info = get_book_info(isbn)
-    serie_name = get_serie_name('https://www.bdbase.fr/recherche?sch=' + isbn)
-    serie = Serie.objects.filter(name=serie_name).first()
-    if not serie:
-        serie = Serie.objects.create(name=serie_name)
-    new_book = Book(
-        title=book_info['title'],
-        ISBN=book_info['isbn'],
-        serie=serie,
-    )
-    new_book.save()
-    save_book_cover(new_book, book_info['cover_edition_key'])
-    new_book.authors.set(find_author(book_info['author_name']))
-    return new_book.id
+    if book_info is not None:
+        serie_name = get_serie_name('https://www.bdbase.fr/recherche?sch=' + isbn)
+        serie = Serie.objects.filter(name=serie_name).first()
+        if not serie:
+            serie = Serie.objects.create(name=serie_name)
+        new_book = Book(
+            title=book_info['title'],
+            ISBN=book_info['isbn'],
+            serie=serie,
+        )
+        new_book.save()
+        save_book_cover(new_book, book_info['cover_edition_key'])
+        new_book.authors.set(find_author(book_info['author_name']))
+        return new_book.id
+    return None
 
 
 def find_author(author_names):
