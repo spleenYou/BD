@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma bibliothèque - Site en construction</title>
+    <link rel="stylesheet" href="{% static 'css/site_under_construction.css' %}">
+</head>
+<body>
+    <header>
+        <nav>{% include 'nav.html' %}</nav>
+    </header>
+    <div class="livre-container">
+        <div class="livre">
+        <div class="page-gauche">
+            <div class="chapitre">Chapitre 1</div>
+            <div class="titre">Site en construction</div>
+            <div style="font-size: 13px; color: #7f8c8d; line-height: 1.6">
+            Nous travaillons actuellement pour vous offrir la meilleure expérience possible.
+            </div>
+        </div>
+    
+        <div class="reliure"></div>
+    
+        <div class="page-droite">
+            <div class="construction-icon">🚧</div>
+            <div class="sous-titre">Mise à jour en cours.</div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
