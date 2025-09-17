@@ -121,6 +121,7 @@ def fill_db_book(isbn):
             title=book_info['title'],
             ISBN=book_info['isbn'],
             serie=serie,
+            first_publish_year=book_info['first_publish_year']
         )
         new_book.save()
         save_book_cover(new_book, book_info['cover_edition_key'])
