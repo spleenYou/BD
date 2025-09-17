@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 
 class TimestampedModel(models.Model):
@@ -115,8 +115,7 @@ class Book(TimestampedModel):
         unique=True,
         null=True,
         blank=True,
-        max_length=13,
-        validators=[MinLengthValidator(10)],
+        validators=[MinLengthValidator(10), MaxLengthValidator(13)],
         verbose_name='ISBN',
     )
     number = models.PositiveSmallIntegerField(
@@ -153,6 +152,12 @@ class Book(TimestampedModel):
         on_delete=models.SET_NULL,
         related_name='books',
         verbose_name='Editeur'
+    )
+    first_publish_year = models.SmallIntegerField(
+        null=True,
+        blank=True,
+        validators=[MinLengthValidator(4), MaxLengthValidator(4)],
+        verbose_name='Première publication'
     )
     BOOK_TYPES = {
         'BD': 'Bande dessinée',
