@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import authentication.views
-import my_library.views as library
 from django.conf import settings
 from django.conf.urls.static import static
+import authentication.views
+import my_library.views as library
+import bd.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('under_construction/', bd.views.under_construction, name='site_under_construction'),
     path('', library.home, name='home'),
     path('login/', authentication.views.login_page, name='login'),
     path('logout/', authentication.views.logout_page, name='logout'),
