@@ -3,16 +3,20 @@
 {% block title %}Ma librairie - Série {{ serie.name }}{% endblock title %}
 
 {% block content %}
-<div>
+<div class="title-section">
     {{ serie.name}}
-    {% for book in serie.books.all %}
-        {% include "my_library/book_template.html" with book=book %}
-        <a href="{% url 'my_library_del_book' book.id %}">Supprimer</a>
-    {% endfor %}
-    {% if not serie.is_complete %}
-        <div>
-            <a href="{% url 'my_library_add_book_serie' serie.id %}">Ajouter un livre</a>
-        </div>
-    {% endif %}
 </div>
+<div class="container-serie">
+    {% for book in serie.books.all %}
+        <div class="book-card">
+            <a class="btn-del" href="{% url 'my_library_del_book' book.id %}">X</a>
+            {% include "my_library/book_template.html" with book=book %}
+        </div>
+    {% endfor %}
+</div>
+{% if not serie.is_complete %}
+    <div>
+        <a class="btn" href="{% url 'my_library_add_book_serie' serie.id %}">Ajouter un livre</a>
+    </div>
+{% endif %}
 {% endblock content %}

@@ -5,8 +5,8 @@
 {% block content %}
 <div class="container-serie">
 {% for serie in library %}
-<a class="btn-serie-name" href="{% url 'view_serie' serie.id %}">{{ serie.name }}</a>
+<a class="btn" href="{% url 'view_serie' serie.id %}">{{ serie.name }}</a>
 {% endfor %}
-<a class="btn-serie-name" href="{% url 'my_library_add_book' %}">Ajouter un livre</a>
+<a class="btn" href="{% url 'my_library_add_book' %}">Ajouter un livre</a>
 </div>
 {% endblock content %}

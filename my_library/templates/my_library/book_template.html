@@ -1,6 +1,6 @@
 {% load static %}
 
-<div>
+<div class="book-template">
     {% if book.cover %}
         <img src="{{ book.cover.url }}" alt='Cover {{ book.title }} {{ book.number }}'>
     {% else %}

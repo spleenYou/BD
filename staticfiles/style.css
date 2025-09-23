@@ -188,7 +188,7 @@ form .errorList {
     gap: 20px;
 }
 
-.btn-serie-name {
+.btn {
     display: inline-flex;
     background-color: #F78888;
     color: black;
@@ -205,13 +205,62 @@ form .errorList {
     height: 40px;
 }
 
-.btn-serie-name:hover {
+.btn:hover {
     background-color: #90CCF4;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.btn-serie-name:active {
+.btn:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title-section {
+    background: var(--color-yel);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 2em;
+    font-weight: bold;
+    width: fit-content;
+    margin: auto;
+}
+
+.book-card {
+    display: grid;
+    margin: 20px 0;
+    background: var(--color-yel);
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.book-card img {
+    width: 180px;
+}
+
+.book-template {
+    display: flex;
+}
+
+.book-template span {
+    margin: auto;
+}
+
+.btn-del {
+    padding: 0;
+    margin: 0;
+    justify-self: right;
+    color: var(--color-red);
+    text-decoration: none;
+    transition: color 0.5s ease;
+}
+
+.btn-del:hover {
+    color: black;
 }
