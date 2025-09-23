@@ -6,6 +6,10 @@
     --color-blue: #5DA2D5;
 }
 
+button {
+    border-style: none;
+}
+
 body {
     margin: 0;
     background-color: white;
@@ -114,7 +118,7 @@ input::placeholder {
     display: block;
 }
 
-.container button, #subscribe a, .button {
+#subscribe a, .button {
     text-decoration: none;
     color: black;
     font-size: medium;
@@ -188,7 +192,7 @@ form .errorList {
     gap: 20px;
 }
 
-.btn {
+.btn, .btn-add {
     display: inline-flex;
     background-color: #F78888;
     color: black;
@@ -205,15 +209,24 @@ form .errorList {
     height: 40px;
 }
 
-.btn:hover {
+.btn:hover, .btn-add:hover {
     background-color: #90CCF4;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
 }
 
-.btn:active {
+.btn-add:hover {
+    cursor: crosshair;
+}
+
+.btn:active, .btn-add:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add {
+    margin-top: 20px;
 }
 
 .title-section {

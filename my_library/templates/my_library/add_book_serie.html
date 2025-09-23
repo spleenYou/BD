@@ -6,12 +6,14 @@
 {% block content %}
     <h2>Livres</h2>
     {% for book in books %}
-    <div>
-        <form method='post' enctype=multipart/form-data>
-            {% csrf_token %}
-            {% include 'my_library/book_template.html' with book=book %}
-            <button name="book_id" value={{ book.id }}>Ajouter</button>
-        </form>
+    <div class="container-serie">
+        <div class="book-card">
+            <form method='post' enctype=multipart/form-data>
+                {% csrf_token %}
+                {% include 'my_library/book_template.html' with book=book %}
+                <button class="btn-add" name="book_id" value={{ book.id }}>Ajouter</button>
+            </form>
+        </div>
     </div>
     {% endfor %}
 {% endblock content %}
