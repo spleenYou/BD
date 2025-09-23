@@ -10,8 +10,5 @@ class UnderConstructionRedirectMiddleware:
         if settings.IS_UNDER_CONSTRUCTION == 'True':
             if request.path != '/under_construction/':
                 return redirect('site_under_construction')
-        else:
-            if request.path != '/':
-                return redirect('home')
         response = self.get_response(request)
         return response
