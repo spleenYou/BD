@@ -3,20 +3,20 @@
 {% block title %}Ajouter un livre{% endblock title %}
 
 {% block content %}
-<form method='post' enctype=multipart/form-data>
-    <input id="ISBN" name="isbn" type='text' placeholder="Indiquer l'ISBN">
+<form class="form-ISBN" method='post' enctype=multipart/form-data>
+    <input class="input-ISBN" id="ISBN" name="isbn" type='text' placeholder="Indiquer l'ISBN">
     {% csrf_token %}
-    <button>Ok</button>
+    <button class="btn-ok">Ok</button>
 </form>
 {% for message in messages %}
 <span>{{ message }}</span>
 {% endfor %}
-<hr class="separator-line"/>
+<div class="separator-line"></div>
 <h2>Séries</h2>
 {% if series.count > 0 %}
 {% for serie in series %}
 <div>
-    <a href="{% url 'my_library_add_book_serie' serie.id %}">
+    <a class="btn" href="{% url 'my_library_add_book_serie' serie.id %}">
         <span>{{ serie.name }} ({{serie.total_books}})</span>
     </a>
 </div>
