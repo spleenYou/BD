@@ -25,11 +25,6 @@ def home(request):
 
 
 @login_required
-def account(request):
-    return render(request, 'my_library/account.html')
-
-
-@login_required
 def add_book_isbn(request, book_id):
     book = Book.objects.get(pk=book_id)
     form = AddBookForm(instance=book)

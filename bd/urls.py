@@ -19,7 +19,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
-import authentication.views
+import authentication.views as authentication
 import my_library.views as library
 import bd.views
 
@@ -27,10 +27,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('under_construction/', bd.views.under_construction, name='site_under_construction'),
     path('', library.home, name='home'),
-    path('login/', authentication.views.login_page, name='login'),
-    path('logout/', authentication.views.logout_page, name='logout'),
-    path('signup/', authentication.views.signup_page, name='signup'),
-    path('account/', library.account, name='account'),
+    path('login/', authentication.login_page, name='login'),
+    path('logout/', authentication.logout_page, name='logout'),
+    path('signup/', authentication.signup_page, name='signup'),
+    path('account/', authentication.account, name='account'),
     path('my_library/', library.my_library, name='my_library'),
     path('my_library/serie/<int:serie_id>', library.view_serie, name='view_serie'),
     path('my_library/book/add/', library.add_book, name='my_library_add_book'),
