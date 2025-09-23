@@ -19,17 +19,17 @@ nav {
     height: 80px;
 }
 
-nav a {
+.nav-link {
     color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
     font-size: 20px;
-    transition: background-color 1s ease;
+    transition: background-color 0.3s ease;
 }
 
-nav a:hover {
+.nav-link:hover {
     background-color: var(--color-clear-blue);
 }
 
@@ -40,7 +40,7 @@ nav div {
     gap: 10px;
 }
 
-nav div a {
+.nav-link {
     padding: 0 10px;
 }
 

@@ -1,15 +1,15 @@
-<a id='home_link' href="{% url 'home' %}">Accueil</a>
+<a class="nav-link" id='home_link' href="{% url 'home' %}">Accueil</a>
 <div>
     {% if user.is_authenticated %}
-        <a href="{% url 'my_library' %}">{{ user.username }}</a>
+        <a class="nav-link" href="{% url 'my_library' %}">{{ user.username }}</a>
     {% endif %}
 </div>
 {% if user.is_authenticated %}
     {% if request.path != '/account/' %}
-    <a href="{% url 'account' %}">Mon compte</a>
+    <a class="nav-link" href="{% url 'account' %}">Mon compte</a>
     {% else %}
-    <a href="{% url 'logout' %}">Se déconnecter</a>
+    <a class="nav-link" href="{% url 'logout' %}">Se déconnecter</a>
     {% endif %}
 {% else %}
-<a href="{% url 'login' %}">Se connecter</a>
+<a class="nav-link" href="{% url 'login' %}">Se connecter</a>
 {% endif %}

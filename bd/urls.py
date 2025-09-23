@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import redirect
 import authentication.views
 import my_library.views as library
 import bd.views
@@ -48,6 +49,7 @@ urlpatterns = [
     path('book/<int:book_id>/author/del/<int:author_id>', library.del_author_to_book, name='del_author_to_book'),
     path('book/<int:book_id>/publisher/add', library.add_publisher_to_book, name='add_publisher_to_book'),
     path('book/<int:book_id>/publisher/del', library.del_publisher_to_book, name='del_publisher_to_book'),
+    path('favicon.ico', lambda x: redirect('/static/icons/favicon.ico')),
 ]
 
 if settings.DEBUG:
