@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container-serie">
 {% for serie in library %}
-<a class="btn-serie-name" href="{% url 'view_serie' serie.id %}">{{ serie.name }} ({{ serie.owned_books }}/{{ serie.total_books }})</a>
+<a class="btn-serie-name" href="{% url 'view_serie' serie.id %}">{{ serie.name }}</a>
 {% endfor %}
 <a class="btn-serie-name" href="{% url 'my_library_add_book' %}">Ajouter un livre</a>
 </div>
