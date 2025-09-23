@@ -64,14 +64,32 @@ section {
     justify-items: center;
 }
 
+input, .btn-ok {
+    display: inline-flex;
+    background-color: var(--color-red);
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 input {
-    padding: 10px 0;
-    margin: 10px 0;
-    border: 2px solid black;
-    width: 20%;
-    min-width: 300px;
-    text-align: center;
-    background-color: antiquewhite;
+    outline: none;
+    border-style: none;
+    width: 300px;
+}
+
+input:hover, input:focus {
+    border: 0 solid black;
+    background-color: #90CCF4;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
 }
 
 input::placeholder {
@@ -79,6 +97,7 @@ input::placeholder {
     text-align: center;
     font-size: 16px;
 }
+
 .container {
     padding-top: 40px;
     width: 100%;
@@ -118,7 +137,7 @@ input::placeholder {
     display: block;
 }
 
-#subscribe a, .button {
+.button {
     text-decoration: none;
     color: black;
     font-size: medium;
@@ -284,34 +303,6 @@ form .errorList {
     justify-content: center;
     align-items: center;
     gap: 10px;
-}
-
-.input-ISBN, .btn-ok {
-    display: inline-flex;
-    background-color: var(--color-red);
-    color: black;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    font-size: 1.2em;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.input-ISBN {
-    outline: none;
-    border-style: none;
-    width: 300px;
-}
-
-.input-ISBN:hover, .input-ISBN:focus {
-    border: 0 solid black;
-    background-color: #90CCF4;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
 }
 
 .btn-ok {

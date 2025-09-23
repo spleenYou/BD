@@ -6,7 +6,7 @@
 <div class='container_home'>
     <div id="subscribe">
         <p>Inscrivez-vous maintenant</p>
-        <a href="{% url 'signup' %}">S'inscrire</a>
+        <a class="btn" href="{% url 'signup' %}">S'inscrire</a>
     </div>
     <div id="connection">
         <p>Connectez-vous</p>
@@ -20,7 +20,7 @@
         <form action="" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type='submit'>Se connecter</button>
+            <button class="btn" type='submit'>Se connecter</button>
         </form>
     </div>
 </div>
