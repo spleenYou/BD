@@ -83,6 +83,7 @@ input {
     outline: none;
     border-style: none;
     width: 300px;
+    text-align: center;
 }
 
 input:hover, input:focus {
