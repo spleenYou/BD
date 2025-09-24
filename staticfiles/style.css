@@ -21,6 +21,7 @@ nav {
     width: auto;
     background-color: var(--color-blue);
     height: 80px;
+    box-shadow: 0 0 8px var(--color-clear-blue);
 }
 
 .nav-link {
