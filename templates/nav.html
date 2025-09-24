@@ -1,7 +1,7 @@
 <a class="nav-link" id='home_link' href="{% url 'home' %}">Accueil</a>
 <div>
     {% if user.is_authenticated %}
-        <a class="nav-link" href="{% url 'my_library' %}">{{ user.username|capfirst }}</a>
+        <a class="nav-link username" href="{% url 'my_library' %}">{{ user.username|capfirst }}</a>
     {% endif %}
 </div>
 {% if user.is_authenticated %}
