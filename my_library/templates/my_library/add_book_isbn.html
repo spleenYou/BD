@@ -3,19 +3,17 @@
 {% block title %}Ajouter un nouveau livre{% endblock title %}
 
 {% block content %}
-    <form method='post' enctype=multipart/form-data>
+<h2>Ajouter un livre</h2>
+<div class="add-book">
+    <form class="form-new-book" method='post' enctype=multipart/form-data>
         {% csrf_token %}
-        <div>
+        <div class="form-new-book-info">
             {{ form.ISBN.label_tag }}
             {{ form.ISBN }}
             {{ form.ISBN.errors }}
-        </div>
-        <div>
             {{ form.title.label_tag }}
             {{ form.title }}
             {{ form.title.errors }}
-        </div>
-        <div>
             {{ form.book_type.label_tag }}
             {{ form.book_type }}
             {{ form.book_type.errors }}
@@ -25,40 +23,35 @@
             {{ form.number.label_tag }}
             {{ form.number }}
             {{ form.number.errors }}
-        </div>
-        <div>
-            <span>Auteurs :</span>
-            {% for author in book.authors.all %}
-                <div>
-                    {{ author.name }}
-                    <a href="{% url 'del_author_to_book' book.id author.id %}">x</a>
-                <div>
-            {% endfor %}
+            {{ form.first_publish_year.label_tag }}
+            {{ form.first_publish_year }}
+            {{ form.first_publish_year.errors }}
+            <span class="label">Auteurs</span>
             <div>
-                <a href="{% url 'add_author_to_book' book.id%}">Ajouter</a>
+            {% for author in book.authors.all %}
+                    {{ author.name }}
+                    <a class="btn-del" href="{% url 'del_author_to_book' book.id author.id %}">x</a>
+                    {% endfor %}
+                    <a class="btn-little" href="{% url 'add_author_to_book' book.id%}">Ajouter</a>
             </div>
-        </div>
-        <div>
-            Editeur :
+            <span class="label">Editeur</span>
             {% if book.publisher %}
                 {{ book.publisher.name }}
-                <a href="{% url 'del_publisher_to_book' book.id %}">Supprimer</a>
+                <a class="btn-del" href="{% url 'del_publisher_to_book' book.id %}">X</a>
             {% else %}
-                <a href="{% url 'add_publisher_to_book' book.id %}">Ajouter</a>
+                <a class="btn-little" href="{% url 'add_publisher_to_book' book.id %}">Ajouter</a>
             {% endif %}
             {{ form.publisher.errors }}
-        </div>
-        <div>
             {{ form.description.label_tag }}
             {{ form.description }}
             {{ form.description.errors }}
         </div>
+        <span>Souhaitez-vous l'ajouter à votre librairie ?</span>
         <div>
-            <span>Souhaitez-vous l'ajouter à votre librairie ?</span>
-            <div>
-                <button name='validation' value='false' type='submit'>Non</button>
-                <button name='validation' value='true' type='submit'>Oui</button>
-            </div>
+            <button class="btn" name='validation' value='false' type='submit'>Non</button>
+            <button class="btn" name='validation' value='true' type='submit'>Oui</button>
         </div>
     </form>
+    <a class="btn" href="">Annuler</a>
+</div>
 {% endblock content %}

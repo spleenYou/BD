@@ -41,7 +41,8 @@ nav {
 
 .nav-link:hover {
     background-color: var(--color-clear-blue);
-    text-decoration: underline;}
+    text-decoration: underline;
+}
 
 nav div {
     display: flex;
@@ -88,7 +89,10 @@ input {
     text-align: center;
 }
 
-input:hover, input:focus {
+input:hover,
+input:focus,
+.form-new-book-info select:focus,
+.form-new-book-info textarea:focus {
     border: 0 solid black;
     background-color: #90CCF4;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -138,19 +142,6 @@ input::placeholder {
 
 #connection form {
     display: block;
-}
-
-.button {
-    text-decoration: none;
-    color: black;
-    font-size: medium;
-    font-style: normal;
-    background-color: antiquewhite;
-    padding: 10px;
-    border: 2px black solid;
-    border-radius: 8px;
-    cursor: pointer;
-    width: fit-content;
 }
 
 #connection input {
@@ -218,7 +209,7 @@ form .errorList {
     gap: 20px;
 }
 
-.btn, .btn-add {
+.btn, .btn-add, .btn-little {
     display: inline-flex;
     background-color: #F78888;
     color: black;
@@ -233,10 +224,16 @@ form .errorList {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 300px;
     height: 40px;
+    border: none;
 }
 
-.btn:hover, .btn-add:hover, .btn-ok:hover {
-    background-color: #90CCF4;
+.btn:hover,
+.btn-add:hover,
+.btn-ok:hover,
+.btn-little:hover,
+.form-new-book-info select:hover,
+.form-new-book-info textarea:hover {
+    background-color: var(--color-clear-blue);
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     cursor: pointer;
@@ -314,4 +311,86 @@ form .errorList {
 .btn-ok {
     width: 100px;
     height: 40px;
+}
+
+.add-book {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+}
+
+.add-book * {
+    font-weight: unset;
+    border-radius: 0;
+}
+
+.form-new-book {
+    display: grid;
+    width: 800px;
+    gap: 10px;
+}
+
+.form-new-book-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+}
+
+.form-new-book-info * {
+    width: 400px;
+}
+
+.form-new-book-info label, .label {
+    background-color: var(--color-red);
+    width: 200px;
+    padding: 10px;
+    justify-self: end;
+    position: relative;
+    display: inline-block;
+}
+
+.form-new-book-info label::after,
+.label::after {
+    content: ">";
+    position: absolute;
+    right: 2px;
+    bottom: 10px;
+    font-size: 16px;
+    color: black;
+    transform-origin: bottom center;
+    transform: translateX(-10px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    /* option : opacity aussi */
+    opacity: 0;
+}
+
+.form-new-book-info label:hover::after,
+.label:hover::after {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.form-new-book-info select {
+    width: 420px;
+}
+
+.form-new-book-info textarea,
+.form-new-book-info select {
+    background-color: #F78888;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 40px;
+    max-height: 100px;
+    border: none;
+}
+
+.btn-little {
+    width: fit-content;
+    font-size: 1em;
+    padding: 0 6px;
 }
