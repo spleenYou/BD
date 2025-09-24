@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator, MinValueValidator, MaxValueValidator
 
 
 class TimestampedModel(models.Model):
@@ -156,7 +156,7 @@ class Book(TimestampedModel):
     first_publish_year = models.SmallIntegerField(
         null=True,
         blank=True,
-        validators=[MinLengthValidator(4), MaxLengthValidator(4)],
+        validators=[MinValueValidator(1000), MaxValueValidator(3000)],
         verbose_name='Première publication'
     )
     BOOK_TYPES = {
