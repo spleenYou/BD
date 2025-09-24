@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 def handle_requests(url):
     try:
-        response = requests.get(url, timeout=30)
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
         return response
     except requests.exceptions.Timeout:
