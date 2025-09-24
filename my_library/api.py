@@ -25,7 +25,6 @@ def get_book_info(isbn):
         response_json = response.json()
         if response_json['numFound'] > 0:
             book_info = response_json['docs'][0]
-            book_info['isbn'] = isbn
             return book_info
     return None
 

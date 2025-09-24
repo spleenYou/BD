@@ -12,5 +12,6 @@ class AddBookForm(forms.ModelForm):
             'book_type',
             'serie',
             'number',
+            'first_publish_year',
             'description',
         )
