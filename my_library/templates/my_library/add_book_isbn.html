@@ -3,8 +3,8 @@
 {% block title %}Ajouter un nouveau livre{% endblock title %}
 
 {% block content %}
-<h2>Ajouter un livre</h2>
 <div class="add-book">
+    <h2>Ajouter un livre</h2>
     <form class="form-new-book" method='post' enctype=multipart/form-data>
         {% csrf_token %}
         <div class="form-new-book-info">
@@ -27,7 +27,7 @@
             {{ form.first_publish_year }}
             {{ form.first_publish_year.errors }}
             <span class="label">Auteurs</span>
-            <div>
+            <div class="inset-border">
             {% for author in book.authors.all %}
                     {{ author.name }}
                     <a class="btn-del" href="{% url 'del_author_to_book' book.id author.id %}">x</a>
@@ -35,6 +35,7 @@
                     <a class="btn-little" href="{% url 'add_author_to_book' book.id%}">Ajouter</a>
             </div>
             <span class="label">Editeur</span>
+            <div class="inset-border">
             {% if book.publisher %}
                 {{ book.publisher.name }}
                 <a class="btn-del" href="{% url 'del_publisher_to_book' book.id %}">X</a>
@@ -42,16 +43,19 @@
                 <a class="btn-little" href="{% url 'add_publisher_to_book' book.id %}">Ajouter</a>
             {% endif %}
             {{ form.publisher.errors }}
+            </div>
             {{ form.description.label_tag }}
             {{ form.description }}
             {{ form.description.errors }}
         </div>
-        <span>Souhaitez-vous l'ajouter à votre librairie ?</span>
+        <div class="separator-line"></div>
+        <span class="add-book-text">Souhaitez-vous l'ajouter à votre librairie ?</span>
         <div>
             <button class="btn" name='validation' value='false' type='submit'>Non</button>
             <button class="btn" name='validation' value='true' type='submit'>Oui</button>
         </div>
+        <div class="separator-line"></div>
     </form>
-    <a class="btn" href="">Annuler</a>
+    <a class="btn" href="">Annuler l'ajout</a>
 </div>
 {% endblock content %}

@@ -106,7 +106,7 @@ input::placeholder {
 }
 
 .container {
-    padding-top: 40px;
+    padding-top: 20px;
     width: 100%;
 }
 
@@ -195,7 +195,7 @@ form .errorList {
 }
 
 .separator-line {
-    margin-top: 20px;
+    margin: 20px 0;
     width: 100%;
     height: 4px;
     background-color: var(--color-blue);
@@ -214,16 +214,14 @@ form .errorList {
     background-color: #F78888;
     color: black;
     text-decoration: none;
-    padding: 10px;
     border-radius: 8px;
     align-items: center;
     justify-content: center;
     font-weight: 500;
-    font-size: 1.4em;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.2em;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
     width: 300px;
-    height: 40px;
+    height: 42px;
     border: none;
 }
 
@@ -234,7 +232,6 @@ form .errorList {
 .form-new-book-info select:hover,
 .form-new-book-info textarea:hover {
     background-color: var(--color-clear-blue);
-    transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     cursor: pointer;
 }
@@ -326,14 +323,13 @@ form .errorList {
 
 .form-new-book {
     display: grid;
-    width: 800px;
     gap: 10px;
 }
 
 .form-new-book-info {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr 2fr;
+    gap: 2px;
     justify-items: center;
     align-items: center;
 }
@@ -342,13 +338,15 @@ form .errorList {
     width: 400px;
 }
 
-.form-new-book-info label, .label {
+.form-new-book-info label,
+.label {
     background-color: var(--color-red);
-    width: 200px;
-    padding: 10px;
+    width: 100%;
+    height: 42px;
     justify-self: end;
     position: relative;
-    display: inline-block;
+    display: grid;
+    align-items: center;
 }
 
 .form-new-book-info label::after,
@@ -392,4 +390,35 @@ form .errorList {
     width: fit-content;
     font-size: 1em;
     padding: 0 6px;
+}
+
+.add-book h2 {
+    font-size: 1.8em;
+    background-color: var(--color-yel);
+    padding: 10px 20px;
+    margin: 15px;
+}
+
+.add-book-text {
+    font-size: 1.2em;
+    background-color: var(--color-yel);
+    padding: 10px 20px;
+    width: fit-content;
+    justify-self: center;
+}
+
+.inset-border {
+    position: relative;
+
+}
+
+.inset-border::before {
+    content: "";
+    background-color: var(--color-red);
+    position: absolute;
+    top: 0px;
+    left: -10px;
+    width: 420px;
+    height: 42px;
+    z-index: -1;
 }
