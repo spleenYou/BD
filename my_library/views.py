@@ -25,8 +25,11 @@ def home(request):
 
 
 @login_required
-def add_book_isbn(request, book_id):
+def add_book_by_id(request, book_id):
     book = Book.objects.get(pk=book_id)
+    print(book.title)
+    if book.title != '':
+        return redirect('my_library')
     form = AddBookForm(instance=book)
     if request.method == 'POST':
         form = AddBookForm(request.POST, instance=book)
@@ -40,7 +43,7 @@ def add_book_isbn(request, book_id):
             return redirect('my_library')
     return render(
         request=request,
-        template_name='my_library/add_book_isbn.html',
+        template_name='my_library/add_book_by_id.html',
         context={'form': form, 'book': book}
     )
 
@@ -70,7 +73,7 @@ def add_book(request):
         if is_isbn(isbn):
             if not isbn_in_db(isbn):
                 book_id = fill_db_book(isbn)
-                return redirect('add_book_isbn', book_id=book_id)
+                return redirect('add_book_by_id', book_id=book_id)
             else:
                 messages.error(request, message='Livre déjà ajouté')
         else:
@@ -182,7 +185,7 @@ def add_author_to_book(request, book_id):
         else:
             new_author = Author.objects.get(pk=request.POST['author'])
         book.authors.add(new_author)
-        return redirect('add_book_isbn', book.id)
+        return redirect('add_book_by_id', book.id)
     authors = Author.objects.all().exclude(
         id__in=book.authors.all().values_list('id', flat=True)
     )
@@ -194,7 +197,7 @@ def del_author_to_book(request, book_id, author_id):
     book = Book.objects.get(pk=book_id)
     author = Author.objects.get(pk=author_id)
     book.authors.remove(author)
-    return redirect('add_book_isbn', book_id)
+    return redirect('add_book_by_id', book_id)
 
 
 @login_required
@@ -208,7 +211,7 @@ def add_publisher_to_book(request, book_id):
             new_publisher = Publisher.objects.get(pk=request.POST['publisher'])
         book.publisher = new_publisher
         book.save()
-        return redirect('add_book_isbn', book.id)
+        return redirect('add_book_by_id', book.id)
     publishers = Publisher.objects.all()
     return render(request, 'my_library/add_publisher_to_book.html', {'book': book, 'publishers': publishers})
 
@@ -218,4 +221,4 @@ def del_publisher_to_book(request, book_id):
     book = Book.objects.get(pk=book_id)
     book.publisher = None
     book.save()
-    return redirect('add_book_isbn', book_id)
+    return redirect('add_book_by_id', book_id)

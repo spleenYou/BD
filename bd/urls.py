@@ -42,8 +42,8 @@ urlpatterns = [
     path('my_library/book/del/<int:book_id>', library.del_book, name='my_library_del_book'),
     path(
         'book/add/<int:book_id>',
-        library.add_book_isbn,
-        name='add_book_isbn'
+        library.add_book_by_id,
+        name='add_book_by_id'
     ),
     path('book/<int:book_id>/author/add', library.add_author_to_book, name='add_author_to_book'),
     path('book/<int:book_id>/author/del/<int:author_id>', library.del_author_to_book, name='del_author_to_book'),

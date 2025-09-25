@@ -89,6 +89,14 @@ input {
     text-align: center;
 }
 
+input[type=file] {
+    font-size: 1em;
+    height: 42px;
+    padding: 0 10px;
+    display: grid;
+    align-content: center;
+}
+
 input:hover,
 input:focus,
 .form-new-book-info select:focus,
