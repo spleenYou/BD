@@ -353,22 +353,21 @@ form .errorList {
 
 .form-new-book-info label::after,
 .label::after {
-    content: ">";
+    content: "";
     position: absolute;
-    right: 2px;
+    right: 4px;
     bottom: 10px;
-    font-size: 16px;
-    color: black;
-    transform-origin: bottom center;
-    transform: translateX(-10px);
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    /* option : opacity aussi */
+    transition: opacity 0.3s ease;
     opacity: 0;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid var(--color-clear-blue);
 }
 
 .form-new-book-info label:hover::after,
 .label:hover::after {
-    transform: translateX(0);
     opacity: 1;
 }
 
